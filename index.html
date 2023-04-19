@@ -3,13 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=	, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="">
-    <link rel="stylesheet" href="styles.css">   
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">   
     <script src="script.js" defer></script>
 </head>
 <body>
-    
+    <div class="wrapper">
+        <div class="workouts-history">
+            <button class="add">add</button>
+            <div class="workouts" id="history">
+                <div class="workout">
+                    <span class="name">Push</span>
+                    <span class="date">22.09.2000</span>
+                    <div class="button-wrapper"><button class="delete">X</button></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="workouts-types">
+            <button class="close hide">X</button>
+            <div class="workouts" id="workouts">   
+            </div>
+        </div>
+
+        <div class="workouts-excercises">
+            <button class="close hide">X</button>
+            <div class="excercises" id="excercises">
+                </div>
+            </div>
+        </div>
+
 </body>
 </html>
