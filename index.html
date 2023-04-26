@@ -11,32 +11,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">   
     <script src="script.js" defer></script>
+    <script src="https://kit.fontawesome.com/ff68fdbb23.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="wrapper">
-        <div class="workouts-history">
-            <button class="add">add</button>
-            <div class="workouts" id="history">
-                <div class="workout">
-                    <span class="name">Push</span>
-                    <span class="date">22.09.2000</span>
-                    <div class="button-wrapper"><button class="delete">X</button></div>
-                </div>
-            </div>
-        </div>
+        <section class="workouts-history">
+            <button class="add"><i class="fa-solid fa-plus"></i></button>
+            <div class="workouts" id="history"></div>
+        </section>
 
-        <div class="workouts-types">
-            <button class="close hide">X</button>
-            <div class="workouts" id="workouts">   
-            </div>
-        </div>
+        <section class="workouts-types hide">
+            <div class="close" id="close-typ"><button class="delete fa-solid fa-xmark"></button></div>
+            <div class="workouts" id="workouts"></div>
+        </section>
 
-        <div class="workouts-excercises">
-            <button class="close hide">X</button>
-            <div class="excercises" id="excercises">
-                </div>
-            </div>
-        </div>
-
+        <section class="workouts-excercises hide">
+            <div class="close" id="close-exc"><button class="delete fa-solid fa-xmark"></button></div>
+            <div class="excercises" id="excercises" data-code=""></div>
+            <button class="save">save</button>
+        </section>
+    </div>
 </body>
 </html>
