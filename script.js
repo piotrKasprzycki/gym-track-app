@@ -8,213 +8,26 @@ const workoutsTypesContainer = document.querySelector("#workouts");
 const excercisesContainer = document.querySelector("#excercises");
 const addWorkoutBtn = document.querySelector(".add");
 const saveWorkoutBtn = document.querySelector(".save");
+const deleteModal = document.querySelector(".deleteConfirmation");
+const confirmBtn = document.querySelector(".yes");
+const closeBtn = document.querySelector(".no");
 
-const workouts = [
-  {
-    id: 1,
-    name: "Push A",
-    excercises: [
-      {
-        name: "Bench Press",
-        sets: 3,
-      },
-      {
-        name: "Incline DB Press",
-        sets: 3,
-      },
-      {
-        name: "Low-to-high Cable Flyes",
-        sets: 3,
-      },
-      {
-        name: "Barbell Overhead Press",
-        sets: 3,
-      },
-      {
-        name: "Cable Laterals",
-        sets: 3,
-      },
-      {
-        name: "Behind-the-head Extensions",
-        sets: 3,
-      },
-      {
-        name: "One-arm Overhead Extensions",
-        sets: 3,
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "Pull A",
-    excercises: [
-      {
-        name: "Bent-over Row",
-        sets: 3,
-      },
-      {
-        name: "Chin-up",
-        sets: 3,
-      },
-      {
-        name: "Seated CNG Cable Row",
-        sets: 3,
-      },
-      {
-        name: "Face Pulls",
-        sets: 3,
-      },
-      {
-        name: "Barbell Shrugs",
-        sets: 3,
-      },
-      {
-        name: "Pinwheel Curls",
-        sets: 3,
-      },
-      {
-        name: "Incline DB Curls",
-        sets: 3,
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: "Legs A",
-    excercises: [
-      {
-        name: "Squats",
-        sets: 3,
-      },
-      {
-        name: "Romanian Deadlift",
-        sets: 5,
-      },
-      {
-        name: "Leg Extensions",
-        sets: 3,
-      },
-      {
-        name: "Lying Leg Curls",
-        sets: 3,
-      },
-      {
-        name: "Standing Calf Raises",
-        sets: 3,
-      },
-      {
-        name: "Seated Calf Raises",
-        sets: 3,
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: "Push B",
-    excercises: [
-      {
-        name: "Incline Press",
-        sets: 3,
-      },
-      {
-        name: "Flat DB Press",
-        sets: 3,
-      },
-      {
-        name: "Incline Cable Flyes",
-        sets: 3,
-      },
-      {
-        name: "Machine Laterals",
-        sets: 3,
-      },
-      {
-        name: "Dips",
-        sets: 3,
-      },
-      {
-        name: "French Press",
-        sets: 3,
-      },
-    ],
-  },
-  {
-    id: 5,
-    name: "Pull B",
-    excercises: [
-      {
-        name: "Pull-ups",
-        sets: 3,
-      },
-      {
-        name: "One-arm DB Rows",
-        sets: 3,
-      },
-      {
-        name: "CNG Pulldowns",
-        sets: 3,
-      },
-      {
-        name: "Reverse Flyes",
-        sets: 3,
-      },
-      {
-        name: "DB Shrugs",
-        sets: 3,
-      },
-      {
-        name: "Alternating DB Curls",
-        sets: 3,
-      },
-      {
-        name: "Reverse Preacher Curls",
-        sets: 3,
-      },
-    ],
-  },
-  {
-    id: 6,
-    name: "Legs B",
-    excercises: [
-      {
-        name: "Deadlift",
-        sets: 5,
-      },
-      {
-        name: "Leg Press",
-        sets: 5,
-      },
-      {
-        name: "Seated Leg Curls",
-        sets: 3,
-      },
-      {
-        name: "Machine Hack Squats",
-        sets: 3,
-      },
-      {
-        name: "Standing Calf Raises",
-        sets: 3,
-      },
-      {
-        name: "Seated Calf Raises",
-        sets: 3,
-      },
-    ],
-  },
-];
+import { workouts } from "./workouts.js";
 
 let history = [];
+
+let confirmElToDelete = "";
 
 const generateHistoryDivs = function (workouts) {
   workoutsHistoryContainer.innerHTML = "";
   workouts.forEach((workout) => {
-    const content = `<div class="workout" data-code="${workout.code}">
-    <span class="name">${workout.name}</span>
-    <span class="date">${workout.date}</span>
-    <div class="button-wrapper"><button class="delete fa-solid fa-xmark"></button>
-    <button class="edit fa-solid fa-pen"></button></div>
-</div>`;
+    const content = `
+    <div class="workout" data-code="${workout.code}">
+      <span class="name">${workout.name}</span>
+      <span class="date">${workout.date}</span>
+      <div class="button-wrapper"><button class="delete fa-solid fa-xmark"></button>
+      <button class="edit fa-solid fa-pen"></button></div>
+    </div>`;
     workoutsHistoryContainer.innerHTML =
       content + workoutsHistoryContainer.innerHTML;
   });
@@ -239,12 +52,14 @@ const saveInLocalStorage = function () {
 };
 
 const generateWorkoutType = function (workout) {
-  const content = `<div class="workout" data-index="${workout.id}">
-    <span class="name">${workout.name}</span>
-    <span class="excercises-number">${Object.keys(workout.excercises).length} ${
+  const content = `
+    <div class="workout" data-index="${workout.id}">
+      <span class="name">${workout.name}</span>
+      <span class="excercises-number">
+      ${Object.keys(workout.excercises).length} ${
     Object.keys(workout.excercises).length === 1 ? "excercise" : "excercises"
   }</span>
-    <div class="button-wrapper"><button class="show-excercises fa-regular fa-hand-pointer"></button></div>
+    <div class="button-wrapper"><button class="show-excercises fa-solid fa-play"></button></div>
 </div>`;
   workoutsTypesContainer.innerHTML += content;
 };
@@ -254,16 +69,18 @@ workouts.forEach((workout) => {
 });
 
 const generateSets = function (excercise) {
-  const content = `<div class="set">
-    <input class="repetitions input" type="number" name="repetitions" min="1" max="999" value="1">
+  const content = `
+  <div class="set">
+    <input class="repetitions input" type="number" name="repetitions" min="0" placeholder="reps">
     <span>x</span>
-    <input class="weight input" type="number" name="weight" min="0" max="999" value="1">kg
+    <input class="weight input" type="number" name="weight" min="0" placeholder="weigth">kg
 </div>`;
   return content.repeat(excercise.sets);
 };
 
 const generateExcercise = function (excercise) {
-  const content = `<div class="excercise">
+  const content = `
+  <div class="excercise">
     <div class="excercise-details">
         <span class="name">${excercise.name}</span>
         <span class="set-number">${excercise.sets} sets</span>
@@ -272,11 +89,12 @@ const generateExcercise = function (excercise) {
     <div class="sets hide">
          ${generateSets(excercise)}
     </div>
-</div>`;
+  </div>`;
   excercisesContainer.innerHTML += content;
 };
 
 const hide = function (section) {
+  deleteModal.classList.add("hide");
   section.classList.add("hide");
 };
 
@@ -361,21 +179,29 @@ const editWorkout = function (element) {
 };
 
 const deleteWorkout = function (element) {
-  if (element.classList.contains("delete")) {
-    excercisesContainer.innerHTML = "";
-    const code = element.closest(".workout").dataset.code;
-    const indexOfElement = history.indexOf(
-      history.find((el) => el.code === code)
-    );
-    history.splice(indexOfElement, 1);
-    saveInLocalStorage();
-    generateHistoryDivs(history);
-  }
+  deleteModal.classList.add("hide");
+  excercisesContainer.innerHTML = "";
+  const code = element.closest(".workout").dataset.code;
+  const indexOfElement = history.indexOf(
+    history.find((el) => el.code === code)
+  );
+  history.splice(indexOfElement, 1);
+  saveInLocalStorage();
+  generateHistoryDivs(history);
 };
 
 workoutsHistoryContainer.addEventListener("click", (e) => {
   editWorkout(e.target);
-  deleteWorkout(e.target);
+  confirmElToDelete = e.target;
+  deleteModal.classList.remove("hide");
+});
+
+confirmBtn.addEventListener("click", () => {
+  deleteWorkout(confirmElToDelete);
+});
+
+closeBtn.addEventListener("click", () => {
+  deleteModal.classList.add("hide");
 });
 
 excercisesContainer.addEventListener("click", (e) => {

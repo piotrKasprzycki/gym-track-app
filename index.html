@@ -4,20 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Gym Track App</title>
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">   
-    <script src="script.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="logos/favicon-16x16.png">   
+    <script type="module" src="script.js" defer></script>
     <script src="https://kit.fontawesome.com/ff68fdbb23.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="wrapper">
         <section class="workouts-history">
+            <div class="img-holder"><img class="logo" src="logos/Mountain Health & Fitness Logo-min.png" alt="logo with dumbbell graphic and application name"></div>
             <button class="add"><i class="fa-solid fa-plus"></i></button>
             <div class="workouts" id="history"></div>
+            <div class="deleteConfirmation hide">
+                <span>Are you sure?</span>
+                <button class="yes">Yes</button>
+                <button class="no">No</button>
+            </div>
         </section>
 
         <section class="workouts-types hide">
