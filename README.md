@@ -24,6 +24,11 @@ https://gym-track-app-851ed3.netlify.app
 | Yellow | ![#fcb300](https://via.placeholder.com/10/fcb300?text=+) #fcb300 |
 
 
+## Feedback
+
+
+I welcome any feedback that you may have. Your input is valuable to me and can help me improve my learning process. Please don't hesitate to reach out to me with any suggestions or ideas you may have. Thank you!
+
 ## Authors
 
 - [@piotrKasprzycki](https://github.com/piotrKasprzycki)
