@@ -1,3 +1,5 @@
+import { workouts } from "./workouts.js";
+
 const sectionHistory = document.querySelector(".workouts-history");
 const sectionTypes = document.querySelector(".workouts-types");
 const sectionExcercises = document.querySelector(".workouts-excercises");
@@ -11,8 +13,6 @@ const saveWorkoutBtn = document.querySelector(".save");
 const deleteModal = document.querySelector(".deleteConfirmation");
 const confirmBtn = document.querySelector(".yes");
 const closeBtn = document.querySelector(".no");
-
-import { workouts } from "./workouts.js";
 
 let history = [];
 
@@ -142,6 +142,7 @@ const addNewWorkout = function (workout) {
   generateHistoryDivs(history);
   displayExcercises(newWorkout);
   excercisesContainer.dataset.code = newWorkout.code;
+  if (!lastWorkouType) return;
   displayData(lastWorkouType);
 };
 
