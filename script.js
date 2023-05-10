@@ -1,4 +1,4 @@
-import { workouts } from "./workouts.js";
+"use strict";
 
 const sectionHistory = document.querySelector(".workouts-history");
 const sectionTypes = document.querySelector(".workouts-types");
@@ -18,31 +18,18 @@ let history = [];
 
 let confirmElToDelete = "";
 
-const generateHistoryDivs = function (workouts) {
-  workoutsHistoryContainer.innerHTML = "";
-  workouts.forEach((workout) => {
-    const content = `
-    <div class="workout" data-code="${workout.code}">
-      <span class="name">${workout.name}</span>
-      <span class="date">${workout.date}</span>
-      <div class="button-wrapper"><button class="delete fa-solid fa-xmark"></button>
-      <button class="edit fa-solid fa-pen"></button></div>
-    </div>`;
-    workoutsHistoryContainer.innerHTML =
-      content + workoutsHistoryContainer.innerHTML;
-  });
-};
+import { workouts } from "./workouts.js";
 
-const init = function () {
+import { generateHistoryDivs } from "./generate.js";
+
+(function () {
   const jsonString = localStorage.getItem("history");
   if (jsonString) {
     const array = JSON.parse(jsonString);
     history = array;
-    generateHistoryDivs(array);
+    generateHistoryDivs(array, workoutsHistoryContainer);
   }
-};
-
-init();
+})();
 
 const saveInLocalStorage = function () {
   if (localStorage.getItem("history")) {
@@ -51,47 +38,13 @@ const saveInLocalStorage = function () {
   localStorage.setItem("history", JSON.stringify(history));
 };
 
-const generateWorkoutType = function (workout) {
-  const content = `
-    <div class="workout" data-index="${workout.id}">
-      <span class="name">${workout.name}</span>
-      <span class="excercises-number">
-      ${Object.keys(workout.excercises).length} ${
-    Object.keys(workout.excercises).length === 1 ? "excercise" : "excercises"
-  }</span>
-    <div class="button-wrapper"><button class="show-excercises fa-solid fa-play"></button></div>
-</div>`;
-  workoutsTypesContainer.innerHTML += content;
-};
+import { generateWorkoutType } from "./generate.js";
 
 workouts.forEach((workout) => {
-  generateWorkoutType(workout);
+  generateWorkoutType(workout, workoutsTypesContainer);
 });
 
-const generateSets = function (excercise) {
-  const content = `
-  <div class="set">
-    <input class="repetitions input" type="number" name="repetitions" min="0" placeholder="reps">
-    <span>x</span>
-    <input class="weight input" type="number" name="weight" min="0" placeholder="weigth">kg
-</div>`;
-  return content.repeat(excercise.sets);
-};
-
-const generateExcercise = function (excercise) {
-  const content = `
-  <div class="excercise">
-    <div class="excercise-details">
-        <span class="name">${excercise.name}</span>
-        <span class="set-number">${excercise.sets} sets</span>
-        <button class="show-repetitions fa-regular fa-square-caret-down"></button>
-    </div>
-    <div class="sets hide">
-         ${generateSets(excercise)}
-    </div>
-  </div>`;
-  excercisesContainer.innerHTML += content;
-};
+import { generateSets, generateExcercise } from "./generate.js";
 
 const hide = function (section) {
   deleteModal.classList.add("hide");
@@ -105,7 +58,7 @@ const show = function (section) {
 const displayExcercises = function (workout) {
   excercisesContainer.innerHTML = "";
   for (const [key, value] of Object.entries(workout.excercises)) {
-    generateExcercise(value);
+    generateExcercise(value, excercisesContainer);
   }
   hide(sectionTypes);
   show(sectionExcercises);
@@ -139,7 +92,7 @@ const addNewWorkout = function (workout) {
   newWorkout.code = `${generateCode()}`;
   const lastWorkouType = history.findLast((el) => el.id === workout.id);
   history.push(newWorkout);
-  generateHistoryDivs(history);
+  generateHistoryDivs(history, workoutsHistoryContainer);
   displayExcercises(newWorkout);
   excercisesContainer.dataset.code = newWorkout.code;
   if (!lastWorkouType) return;
@@ -188,7 +141,7 @@ const deleteWorkout = function (element) {
   );
   history.splice(indexOfElement, 1);
   saveInLocalStorage();
-  generateHistoryDivs(history);
+  generateHistoryDivs(history, workoutsHistoryContainer);
 };
 
 workoutsHistoryContainer.addEventListener("click", (e) => {
@@ -214,9 +167,7 @@ excercisesContainer.addEventListener("click", (e) => {
   }
 });
 
-const generateCode = function () {
-  return Math.random().toString(36).substring(2, 12);
-};
+import { generateCode } from "./generate.js";
 
 const saveExcercise = function (excercise) {
   hide(sectionExcercises);
